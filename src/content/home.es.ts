@@ -1,7 +1,9 @@
+import { siteIdentity } from '../config/site';
+
 export const homeContent = {
   meta: {
-    title: "DAB Tech | Sistemas operados por IA para empresas mexicanas",
-    description: "DAB encuentra procesos que cuestan tiempo y dinero, conecta sus datos y reglas, despliega IA con control humano y mide el resultado."
+    title: `${siteIdentity.name} | Sistemas operados por IA para empresas mexicanas`,
+    description: siteIdentity.metaDescription
   },
   nav: {
     links: [
@@ -236,6 +238,7 @@ export const homeContent = {
       { label: "Cómo funciona", href: "#como-funciona" },
       { label: "Método", href: "#metodo" },
       { label: "Preguntas", href: "#preguntas" },
+      { label: "Empresa", href: "/empresa/" },
       { label: "Privacidad", href: "/privacidad/" },
       { label: "Contacto", href: "#diagnostico" }
     ],

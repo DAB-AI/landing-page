@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteIdentity } from '../config/site';
+
+const title = `Empresa | ${siteIdentity.name}`;
+const description = `${siteIdentity.name} diseña e integra sistemas operados por IA para empresas mexicanas, con control humano y resultados medibles.`;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="entity-page section">
+    <div class="container entity-page__container">
+      <header class="entity-page__header">
+        <h1>{siteIdentity.name}</h1>
+        <p class="entity-page__lead">{siteIdentity.descriptor}</p>
+      </header>
+
+      <div class="entity-page__body">
+        <section aria-labelledby="que-es-dab-tech">
+          <h2 id="que-es-dab-tech">Qué es DAB Tech</h2>
+          <p>
+            DAB Tech diseña e integra sistemas operados por IA dentro de procesos empresariales existentes. Su trabajo conecta datos, reglas y acciones para que un proceso repetitivo pueda avanzar con control humano y con una medición clara de sus resultados. En la identidad visual del sitio, DAB Tech también aparece como DAB/TECH.
+          </p>
+          <p>
+            El punto de partida no es una herramienta aislada ni la sustitución del ERP o CRM de una empresa. DAB Tech entra a un proceso real, documenta sus entradas, decisiones, responsables y excepciones, y conecta el contexto necesario para preparar o ejecutar acciones permitidas. Las excepciones se mantienen bajo responsabilidad humana.
+          </p>
+        </section>
+
+        <section aria-labelledby="problemas-y-procesos">
+          <h2 id="problemas-y-procesos">Problemas y procesos iniciales</h2>
+          <p>
+            DAB Tech trabaja con empresas mexicanas que tienen fricción observable en procesos repetitivos: esperas entre personas y sistemas, recaptura o conciliación de información, decisiones detenidas y excepciones que llegan sin contexto. Para que un proceso sea candidato, su costo debe poder observarse mediante señales como tiempo de ciclo, trabajo manual, errores, cartera, capacidad o ingresos no atendidos.
+          </p>
+          <p>
+            Los procesos iniciales visibles son {siteIdentity.processes[0]}, {siteIdentity.processes[1]} y {siteIdentity.processes[2]}. Son áreas de evaluación, no paquetes cerrados. Las simulaciones publicadas en el sitio son ilustrativas: muestran el mecanismo de un workflow, pero no representan casos de clientes ni una plataforma empaquetada.
+          </p>
+        </section>
+
+        <section aria-labelledby="como-trabaja">
+          <h2 id="como-trabaja">Cómo trabaja</h2>
+          <p>
+            El método avanza de {siteIdentity.method[0].toLocaleLowerCase(siteIdentity.language)} a {siteIdentity.method[1].toLocaleLowerCase(siteIdentity.language)}, después a {siteIdentity.method[2].toLocaleLowerCase(siteIdentity.language)} y finalmente a {siteIdentity.method[3].toLocaleLowerCase(siteIdentity.language)}. Primero se elige un workflow por impacto, acceso a datos, repetibilidad y viabilidad. Luego se prueba con volumen real y revisión humana. La autonomía solo aumenta cuando el desempeño, el riesgo y la evidencia lo permiten.
+          </p>
+          <p>
+            DAB Tech opera desde {siteIdentity.location.region}, {siteIdentity.location.country}, con servicio orientado a empresas mexicanas. La referencia principal sobre su enfoque, demostraciones y diagnóstico está en la <a href="/">página de inicio de DAB Tech</a>.
+          </p>
+        </section>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .entity-page {
+    min-height: 70vh;
+    background: var(--c-ivory-bg);
+    color: var(--c-ink);
+    padding-top: clamp(8rem, 12vw, 10rem);
+  }
+
+  .entity-page__container {
+    max-width: 840px;
+  }
+
+  .entity-page__header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--c-rule-light);
+  }
+
+  .entity-page__header h1 {
+    max-width: 12ch;
+    color: var(--c-ink);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .entity-page__lead {
+    max-width: 34ch;
+    margin-top: 1.25rem;
+    color: var(--c-ink-muted);
+    font-size: clamp(1.15rem, 2vw, 1.35rem);
+    line-height: 1.45;
+  }
+
+  .entity-page__body {
+    display: grid;
+    gap: 2.75rem;
+  }
+
+  .entity-page__body h2 {
+    margin-bottom: 0.9rem;
+    color: var(--c-ink);
+    font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .entity-page__body p {
+    max-width: 72ch;
+    margin-bottom: 0.9rem;
+    color: var(--c-ink-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .entity-page__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .entity-page__body a {
+    color: var(--c-orange-text-ivory);
+    font-weight: 600;
+    text-underline-offset: 4px;
+  }
+
+  .entity-page__body a:hover {
+    text-decoration-thickness: 2px;
+  }
+</style>
