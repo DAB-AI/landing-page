@@ -1,0 +1,494 @@
+---
+import SectionIntro from '../ui/SectionIntro.astro';
+import { homeContent } from '../../content/home.es';
+import { isPrivacyApproved } from '../../content/privacy';
+import WorkflowDiagnostic from '../islands/WorkflowDiagnostic';
+
+const { finalCta } = homeContent;
+---
+
+<section class="diagnostic-section section section--canvas" id="diagnostico">
+  <div class="container">
+    <SectionIntro
+      eyebrow={finalCta.eyebrow}
+      title={finalCta.title}
+      intro={finalCta.body}
+    />
+
+    <div class="diagnostic-wrapper">
+      <WorkflowDiagnostic client:visible handoffEnabled={isPrivacyApproved} />
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  .diagnostic-section {
+    background-color: var(--c-ivory-bg);
+  }
+
+  .diagnostic-wrapper {
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .diagnostic-card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-panel);
+    padding: clamp(1.5rem, 4vw, 3rem);
+    color: var(--c-ink);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .diagnostic-island__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .diagnostic-island__eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-orange-text-ivory, #A83B12);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .diagnostic-island__title {
+    font-family: var(--font-sans);
+    font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+    font-weight: 600;
+    color: var(--c-ink);
+    line-height: 1.25;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .diagnostic-island__intro {
+    font-size: 0.95rem;
+    color: var(--c-ink-muted);
+    max-width: 600px;
+    margin: 0 auto 1.5rem auto;
+    line-height: 1.45;
+  }
+
+  .diagnostic-stepper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  .diagnostic-stepper__item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--c-ink-muted);
+  }
+
+  .diagnostic-stepper__item--active {
+    color: var(--c-orange-text-ivory, #A83B12);
+  }
+
+  .diagnostic-stepper__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--c-rule-light);
+    color: var(--c-ink-muted);
+    font-size: 0.775rem;
+  }
+
+  .diagnostic-stepper__item--active .diagnostic-stepper__num {
+    background-color: var(--c-orange-accent);
+    color: #FFFFFF;
+  }
+
+  .diagnostic-stepper__line {
+    width: 32px;
+    height: 2px;
+    background-color: var(--c-rule-light);
+  }
+
+  .diagnostic-step-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--c-ink);
+    margin: 0 0 0.4rem 0;
+  }
+
+  .diagnostic-step-instruction {
+    font-size: 0.9rem;
+    color: var(--c-ink-muted);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .diagnostic-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .diagnostic-group-fieldset {
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-small);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--c-ivory-bg);
+  }
+
+  .diagnostic-group-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--c-ink);
+    padding: 0 0.35rem;
+  }
+
+  .diagnostic-options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  @media (min-width: 640px) {
+    .diagnostic-options-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .diagnostic-option-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-small);
+    background-color: var(--c-ivory-bg);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+  }
+
+  .diagnostic-option-card:hover {
+    border-color: var(--c-orange-accent);
+  }
+
+  .diagnostic-option-card--selected {
+    border-color: var(--c-orange-accent);
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 1px var(--c-orange-accent);
+  }
+
+  .diagnostic-radio, .diagnostic-checkbox {
+    margin-top: 0.2rem;
+    accent-color: var(--c-orange-accent);
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+  }
+
+  .diagnostic-option-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .diagnostic-option-label {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--c-ink);
+  }
+
+  .diagnostic-option-desc {
+    font-size: 0.8125rem;
+    color: var(--c-ink-muted);
+    line-height: 1.35;
+  }
+
+  .diagnostic-custom-field {
+    margin-top: 1.25rem;
+    padding: 1rem;
+    background-color: var(--c-ivory-bg);
+    border: 1px dashed var(--c-rule-light);
+    border-radius: var(--radius-small);
+  }
+
+  .diagnostic-field-charcount {
+    display: block;
+    text-align: right;
+    font-size: 0.75rem;
+    color: var(--c-ink-muted);
+    margin-top: 0.25rem;
+  }
+
+  .diagnostic-radio-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .diagnostic-radio-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid var(--c-rule-light);
+    border-radius: 9999px;
+    background-color: #FFFFFF;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--c-ink);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+  }
+
+  .diagnostic-radio-pill:hover {
+    border-color: var(--c-orange-accent);
+  }
+
+  .diagnostic-radio-pill--selected {
+    border-color: var(--c-orange-accent);
+    background-color: var(--c-orange-accent);
+    color: #FFFFFF;
+  }
+
+  .diagnostic-radio-pill input {
+    display: none;
+  }
+
+  .diagnostic-error-banner {
+    background-color: #FDE8E7;
+    border: 1px solid #9D2B25;
+    border-radius: var(--radius-small);
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .diagnostic-error-text {
+    color: #9D2B25;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .diagnostic-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-top: 1.75rem;
+  }
+
+  .diagnostic-actions--split {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .btn-diagnostic-next, .btn-diagnostic-back, .btn-diagnostic-back-edit {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-small);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+  }
+
+  .btn-diagnostic-next {
+    background-color: var(--c-orange-accent);
+    color: #FFFFFF;
+    border: 1px solid var(--c-orange-accent);
+  }
+
+  .btn-diagnostic-next:hover {
+    opacity: 0.92;
+  }
+
+  .btn-diagnostic-back, .btn-diagnostic-back-edit {
+    background-color: transparent;
+    color: var(--c-ink);
+    border: 1px solid var(--c-rule-light);
+  }
+
+  .btn-diagnostic-back:hover, .btn-diagnostic-back-edit:hover {
+    border-color: var(--c-ink);
+  }
+
+  /* Result screen styles */
+  .diagnostic-result-header {
+    text-align: center;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--c-rule-light);
+  }
+
+  .diagnostic-result-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--c-orange-text-ivory, #A83B12);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 9999px;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+  }
+
+  .diagnostic-result-title {
+    font-family: var(--font-sans);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--c-ink);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .diagnostic-result-summary {
+    font-size: 0.95rem;
+    color: var(--c-ink-muted);
+    margin: 0;
+    line-height: 1.45;
+  }
+
+  .diagnostic-result-section {
+    margin-bottom: 1.25rem;
+  }
+
+  .diagnostic-result-section--highlight {
+    background-color: var(--c-ivory-bg);
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-small);
+    padding: 1rem;
+  }
+
+  .diagnostic-result-subtitle {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: var(--c-ink);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .diagnostic-result-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .diagnostic-result-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--c-ink);
+    line-height: 1.4;
+  }
+
+  .diagnostic-result-bullet {
+    color: var(--c-orange-accent);
+    font-weight: bold;
+  }
+
+  .diagnostic-human-tag {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-size: 0.775rem;
+    font-weight: 700;
+    color: var(--c-orange-text-ivory, #A83B12);
+  }
+
+  .diagnostic-privacy-notice {
+    background-color: var(--c-ivory-bg);
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-small);
+    padding: 0.85rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .diagnostic-privacy-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--c-ink);
+    margin: 0 0 0.25rem 0;
+  }
+
+  .diagnostic-privacy-text {
+    font-size: 0.8125rem;
+    color: var(--c-ink-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .diagnostic-disclaimer {
+    font-size: 0.775rem;
+    color: var(--c-ink-muted);
+    font-style: italic;
+    text-align: center;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .diagnostic-actions--result {
+    align-items: center;
+  }
+
+  .btn-whatsapp-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.95rem 1.5rem;
+    background-color: var(--c-orange-accent);
+    color: #FFFFFF;
+    font-family: var(--font-sans);
+    font-size: 1.05rem;
+    font-weight: 700;
+    border-radius: var(--radius-small);
+    text-decoration: none;
+    transition: background-color var(--duration-fast) ease;
+  }
+
+  .btn-whatsapp-cta:hover {
+    background-color: var(--c-orange-text-ivory);
+  }
+
+  .whatsapp-icon {
+    flex-shrink: 0;
+  }
+
+  .diagnostic-whatsapp-disabled {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 1rem;
+    background-color: var(--c-ivory-bg);
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-small);
+    width: 100%;
+    text-align: center;
+  }
+
+  .disabled-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--c-ink-muted);
+    background-color: var(--c-rule-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+  }
+
+  .disabled-text {
+    font-size: 0.825rem;
+    color: var(--c-ink-muted);
+    margin: 0;
+  }
+</style>

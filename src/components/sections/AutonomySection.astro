@@ -1,0 +1,174 @@
+---
+import SectionIntro from '../ui/SectionIntro.astro';
+import { homeContent } from '../../content/home.es';
+
+const { autonomySection } = homeContent;
+---
+
+<section class="autonomy-section section section--canvas" id="autonomia">
+  <div class="container">
+    <SectionIntro
+      eyebrow={autonomySection.eyebrow}
+      title={autonomySection.title}
+    />
+
+    <!-- Integrated Responsibility Matrix (No Card Soup) -->
+    <div class="autonomy-matrix">
+      <div class="autonomy-matrix__header desktop-only">
+        <div class="matrix-col col-level">NIVEL</div>
+        <div class="matrix-col col-ai">ACCIÓN DE LA IA</div>
+        <div class="matrix-col col-human">RESPONSABILIDAD HUMANA</div>
+        <div class="matrix-col col-gate">CRITERIO DE AVANCE</div>
+      </div>
+
+      <div class="autonomy-matrix__body">
+        {autonomySection.levels.map((lvl) => (
+          <article class="autonomy-row">
+            <div class="matrix-cell cell-level">
+              <span class="level-num">{lvl.level}</span>
+              <h3 class="level-name">{lvl.name}</h3>
+            </div>
+
+            <div class="matrix-cell cell-ai">
+              <span class="cell-label mobile-only">ACCIÓN DE LA IA</span>
+              <p class="cell-desc">{lvl.description}</p>
+            </div>
+
+            <div class="matrix-cell cell-human">
+              <span class="cell-label mobile-only">RESPONSABILIDAD HUMANA</span>
+              <p class="cell-val">{lvl.humanRole}</p>
+            </div>
+
+            <div class="matrix-cell cell-gate">
+              <span class="cell-label mobile-only">CRITERIO DE AVANCE</span>
+              <p class="cell-gate-text">{lvl.gate}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .autonomy-section {
+    background-color: var(--c-ivory-bg);
+  }
+
+  .autonomy-matrix {
+    background-color: #FFFFFF;
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  }
+
+  .autonomy-matrix__header {
+    display: grid;
+    grid-template-columns: 2.5fr 3.5fr 3fr 3fr;
+    gap: 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: var(--c-olive-darker);
+    color: var(--c-text-inverse);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--c-orange-text-ivory, #A83B12);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+  }
+
+  @media (min-width: 900px) {
+    .desktop-only {
+      display: grid;
+    }
+    .mobile-only {
+      display: none;
+    }
+  }
+
+  .autonomy-matrix__body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .autonomy-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--c-rule-light);
+    transition: background-color var(--duration-fast) ease;
+  }
+
+  .autonomy-row:last-child {
+    border-bottom: none;
+  }
+
+  .autonomy-row:hover {
+    background-color: var(--c-ivory-bg);
+  }
+
+  @media (min-width: 900px) {
+    .autonomy-row {
+      grid-template-columns: 2.5fr 3.5fr 3fr 3fr;
+      gap: 1.5rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+    }
+  }
+
+  .cell-level {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .level-num {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--c-orange-text-ivory, #A83B12);
+  }
+
+  .level-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+
+  .cell-desc {
+    font-size: 0.95rem;
+    color: var(--c-ink-muted);
+    line-height: 1.5;
+  }
+
+  .cell-val {
+    font-size: 0.925rem;
+    font-weight: 500;
+    color: var(--c-ink);
+    line-height: 1.45;
+  }
+
+  .cell-gate-text {
+    font-size: 0.875rem;
+    font-family: var(--font-mono);
+    color: var(--c-ink-muted);
+    line-height: 1.45;
+    background-color: var(--c-ivory-bg);
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-small);
+    border-left: 2px solid var(--c-orange-accent);
+  }
+</style>

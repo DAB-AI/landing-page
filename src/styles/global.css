@@ -1,0 +1,136 @@
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./motion.css";
+
+/* Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* Anchor Scroll Margin for Fixed Header Offset */
+[id] {
+  scroll-margin-top: calc(var(--header-height, 72px) + 24px);
+}
+
+/* Accessibility & Focus */
+:focus-visible {
+  outline: 3px solid #FFFFFF;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--c-ink, #111412);
+  border-radius: var(--radius-small);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 1rem;
+  background: var(--color-ink);
+  color: var(--color-surface);
+  padding: 0.75rem 1.25rem;
+  z-index: 1000;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: var(--radius-small);
+  transition: top var(--duration-fast) ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Layout Utilities */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1rem, 4vw, 2.5rem);
+  padding-right: clamp(1rem, 4vw, 2.5rem);
+}
+
+/* Landing rhythm only: Hero and privacy retain their authored spacing. */
+.section:where(:not(.hero):not(.privacy-page)) {
+  padding-block: var(--section-space);
+}
+
+.section.demo-section,
+.section.faq-section,
+.section.diagnostic-section {
+  padding-block: var(--section-space-compact);
+}
+
+.section:not(.hero):not(.privacy-page) > :first-child,
+.section:not(.hero):not(.privacy-page) > .container > :first-child {
+  margin-top: 0;
+}
+
+.section:not(.hero):not(.privacy-page) > :last-child,
+.section:not(.hero):not(.privacy-page) > .container > :last-child {
+  margin-bottom: 0;
+}
+
+/* Only consecutive ivory sections need a rule; other surfaces already differ. */
+.demo-section + .autonomy-section,
+.faq-section + .diagnostic-section {
+  border-top: 1px solid var(--c-rule-light);
+}
+
+@media (max-width: 599px) {
+  .section:not(.hero):not(.privacy-page) {
+    padding-block: var(--section-space-mobile);
+  }
+}
+
+.section--canvas {
+  background-color: var(--color-canvas);
+}
+
+.section--surface {
+  background-color: var(--color-surface);
+}
+
+.section--olive-deep {
+  background-color: var(--color-olive-800);
+  color: #FCFCF8;
+}
+
+.section--olive-soft {
+  background-color: var(--color-olive-100);
+  color: var(--color-ink);
+}
+
+.section--orange-soft {
+  background-color: var(--color-orange-100);
+  color: var(--color-ink);
+}

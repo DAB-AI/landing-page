@@ -1,0 +1,123 @@
+---
+import SectionIntro from '../ui/SectionIntro.astro';
+import { homeContent } from '../../content/home.es';
+
+const { problemSignals } = homeContent;
+---
+
+<section class="problem-signals section section--canvas" id="como-funciona">
+  <div class="container">
+    <SectionIntro
+      eyebrow={problemSignals.eyebrow}
+      title={problemSignals.title}
+      intro={problemSignals.intro}
+    />
+
+    <!-- Asymmetric Editorial Columns without closed card boxes -->
+    <div class="problem-signals__grid">
+      {problemSignals.signals.map((signal, idx) => (
+        <article class="problem-editorial-col">
+          <div class="problem-editorial-col__num">0{idx + 1}</div>
+          <h3 class="problem-editorial-col__title">{signal.title}</h3>
+          <p class="problem-editorial-col__description">{signal.description}</p>
+          <div class="problem-editorial-col__evidence">
+            <span class="evidence-tag">EVIDENCIA REAL</span>
+            <span class="evidence-text">{signal.evidence}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <div class="problem-signals__closure">
+      <p>{problemSignals.closure}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problem-signals {
+    background-color: var(--c-ivory-bg);
+  }
+
+  .problem-signals__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: var(--section-content-gap);
+  }
+
+  @media (min-width: 768px) {
+    .problem-signals__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  .problem-editorial-col {
+    background-color: transparent;
+    border-top: 2px solid var(--c-orange-accent);
+    padding-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .problem-editorial-col__num {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--c-orange-text-ivory, #A83B12);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .problem-editorial-col__title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--c-ink);
+    line-height: 1.25;
+  }
+
+  .problem-editorial-col__description {
+    font-size: 0.95rem;
+    color: var(--c-ink-muted);
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+
+  .problem-editorial-col__evidence {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--c-rule-light);
+  }
+
+  .evidence-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--c-orange-text-ivory, #A83B12);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .evidence-text {
+    font-size: 0.875rem;
+    color: var(--c-ink);
+    line-height: 1.45;
+  }
+
+  .problem-signals__closure {
+    padding: 1.25rem 1.5rem;
+    background-color: var(--c-ivory-surface);
+    border-left: 3px solid var(--c-orange-accent);
+    border-radius: var(--radius-small);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--c-ink);
+    max-width: 720px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+</style>

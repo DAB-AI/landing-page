@@ -1,0 +1,179 @@
+---
+import { homeContent } from '../../content/home.es';
+
+const { footer } = homeContent;
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const getHref = (href: string) => {
+  if (href.startsWith('#')) {
+    return isHome ? href : `/${href}`;
+  }
+  return href;
+};
+---
+
+<footer class="footer" id="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand-col">
+        <a href="/" class="footer__brand" aria-label="DAB Tech Inicio">
+          <span class="brand-bold">DAB</span>
+          <span class="brand-slash">/</span>
+          <span class="brand-light">TECH</span>
+        </a>
+        <p class="footer__thesis">{footer.thesis}</p>
+        <p class="footer__location">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          {footer.location}
+        </p>
+      </div>
+
+      <div class="footer__nav-col">
+        <h3 class="footer__nav-title">Navegación</h3>
+        <ul class="footer__links">
+          {footer.links.map((link) => (
+            <li>
+              <a href={getHref(link.href)} class="footer__link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer__privacy-col" id="privacidad">
+        <h3 class="footer__nav-title">Privacidad & Compromiso</h3>
+        <p class="footer__privacy-text">
+          No almacenamos PII sensible en analítica ni transferimos información operativa fuera del workflow autorizado.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p>{footer.copyright}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--c-olive-darker);
+    color: var(--c-text-inverse);
+    border-top: 1px solid var(--c-rule-dark);
+    padding-top: 4rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer__grid {
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 3rem;
+    }
+  }
+
+  .footer__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .brand-bold {
+    font-weight: 600;
+    color: var(--c-text-inverse);
+  }
+
+  .brand-slash {
+    color: var(--c-orange-text-olive, #EF6634);
+    font-weight: 500;
+  }
+
+  .brand-light {
+    font-weight: 400;
+    color: var(--c-text-muted-inverse);
+  }
+
+  .footer__thesis {
+    font-size: 0.95rem;
+    color: var(--c-text-muted-inverse);
+    max-width: 36ch;
+    margin-bottom: 1.25rem;
+    line-height: 1.5;
+  }
+
+  .footer__location {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--c-text-muted-inverse);
+    font-weight: 500;
+  }
+
+  .footer__location svg {
+    color: var(--c-orange-text-olive, #EF6634);
+  }
+
+  .footer__nav-title {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--c-orange-text-olive, #EF6634);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer__links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer__link {
+    font-size: 0.9rem;
+    color: var(--c-text-muted-inverse);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease;
+  }
+
+  .footer__link:hover,
+  .footer__link:focus-visible {
+    color: var(--c-text-inverse);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .footer__privacy-text {
+    font-size: 0.875rem;
+    color: var(--c-text-muted-inverse);
+    line-height: 1.5;
+  }
+
+  .footer__bottom {
+    padding-top: 2rem;
+    border-top: 1px solid var(--c-rule-dark);
+    font-size: 0.825rem;
+    color: var(--c-text-muted-inverse);
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .footer__bottom {
+      text-align: left;
+    }
+  }
+</style>

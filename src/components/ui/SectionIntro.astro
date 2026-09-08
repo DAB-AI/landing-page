@@ -1,0 +1,58 @@
+---
+import Eyebrow from './Eyebrow.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  align?: 'left' | 'center';
+  variant?: 'olive' | 'orange' | 'light';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  intro,
+  align = 'left',
+  variant = 'olive',
+  class: className = ''
+} = Astro.props;
+---
+
+<div class={`section-intro section-intro--${align} ${className}`}>
+  <Eyebrow text={eyebrow} variant={variant} />
+  <h2 class="section-intro__title">{title}</h2>
+  {intro && <p class="section-intro__text text-copy-measure">{intro}</p>}
+</div>
+
+<style>
+  .section-intro {
+    margin-bottom: var(--section-intro-gap);
+  }
+
+  .section-intro--center {
+    text-align: center;
+  }
+
+  .section-intro--center .section-intro__text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-intro__title {
+    margin-bottom: 1rem;
+    line-height: 1.15;
+  }
+
+  .section-intro__text {
+    font-size: var(--text-body-large);
+    color: var(--color-muted);
+    line-height: 1.5;
+  }
+
+  .section-intro--light .section-intro__text {
+    color: var(--color-olive-100);
+    opacity: 0.9;
+  }
+</style>

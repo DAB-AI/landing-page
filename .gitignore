@@ -1,0 +1,32 @@
+# Dependencias y compilación
+node_modules/
+dist/
+.astro/
+coverage/
+
+# Material local, evidencia y entregas generadas
+_local/
+evidence/
+review/
+scratch/
+_releases/
+*.zip
+/LATEST_RELEASE.json
+/section-rhythm-*.png
+/section-boundaries-validation.json
+
+# Entornos locales; conservar solo el ejemplo sin secretos
+.env
+.env.*
+!.env.example
+
+# Herramientas, registros y archivos del sistema
+.codex/
+.agents/
+.vercel/
+.vscode/
+.idea/
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db

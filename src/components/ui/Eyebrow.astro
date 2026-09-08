@@ -1,0 +1,48 @@
+---
+interface Props {
+  text: string;
+  variant?: 'olive' | 'orange' | 'light';
+  class?: string;
+}
+
+const { text, variant = 'olive', class: className = '' } = Astro.props;
+
+const variantClasses = {
+  olive: 'eyebrow--olive',
+  orange: 'eyebrow--orange',
+  light: 'eyebrow--light'
+};
+---
+
+<span class={`eyebrow ${variantClasses[variant]} ${className}`}>
+  {text}
+</span>
+
+<style>
+  .eyebrow {
+    display: inline-block;
+    font-size: var(--text-eyebrow);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .eyebrow--olive {
+    color: var(--color-olive-600);
+  }
+
+  .eyebrow--orange {
+    color: var(--c-orange-text-ivory, #A83B12);
+  }
+
+  :global(.hero) .eyebrow--orange,
+  :global(.section--olive-deep) .eyebrow--orange,
+  :global(.section--olive-dark) .eyebrow--orange {
+    color: var(--c-orange-text-olive, #EF6634);
+  }
+
+  .eyebrow--light {
+    color: var(--color-olive-100);
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+import SectionIntro from '../ui/SectionIntro.astro';
+import { homeContent } from '../../content/home.es';
+
+const { faq } = homeContent;
+---
+
+<section class="faq-section section section--canvas" id="preguntas">
+  <div class="container">
+    <SectionIntro
+      eyebrow={faq.eyebrow}
+      title={faq.title}
+    />
+
+    <div class="faq-accordion" id="faq-accordion">
+      {faq.items.map((item, idx) => {
+        const questionId = `faq-q-${idx}`;
+        const answerId = `faq-a-${idx}`;
+        return (
+          <div class="faq-item">
+            <h3 class="faq-item__header">
+              <button
+                type="button"
+                id={questionId}
+                aria-expanded="false"
+                aria-controls={answerId}
+                class="faq-button"
+              >
+                <span class="faq-button__text">{item.q}</span>
+                <span class="faq-button__icon" aria-hidden="true">+</span>
+              </button>
+            </h3>
+            <div
+              id={answerId}
+              role="region"
+              aria-labelledby={questionId}
+              hidden
+              class="faq-answer"
+            >
+              <p class="faq-answer__text">{item.a}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Accessible Accordion Logic
+  const accordion = document.getElementById('faq-accordion');
+  const buttons = accordion?.querySelectorAll<HTMLButtonElement>('.faq-button');
+
+  buttons?.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      const answerId = btn.getAttribute('aria-controls');
+      const answerEl = answerId ? document.getElementById(answerId) : null;
+
+      // Close all other accordion items for clean focus
+      buttons.forEach((otherBtn) => {
+        if (otherBtn !== btn) {
+          otherBtn.setAttribute('aria-expanded', 'false');
+          const otherAnsId = otherBtn.getAttribute('aria-controls');
+          const otherAns = otherAnsId ? document.getElementById(otherAnsId) : null;
+          if (otherAns) otherAns.hidden = true;
+          const icon = otherBtn.querySelector('.faq-button__icon');
+          if (icon) icon.textContent = '+';
+        }
+      });
+
+      // Toggle current
+      if (isExpanded) {
+        btn.setAttribute('aria-expanded', 'false');
+        if (answerEl) answerEl.hidden = true;
+        const icon = btn.querySelector('.faq-button__icon');
+        if (icon) icon.textContent = '+';
+      } else {
+        btn.setAttribute('aria-expanded', 'true');
+        if (answerEl) answerEl.hidden = false;
+        const icon = btn.querySelector('.faq-button__icon');
+        if (icon) icon.textContent = '−';
+      }
+    });
+  });
+</script>
+
+<style>
+  .faq-section {
+    background-color: var(--c-ivory-bg);
+  }
+
+  .faq-accordion {
+    max-width: 860px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .faq-item {
+    background-color: #FFFFFF;
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-panel);
+    overflow: hidden;
+  }
+
+  .faq-item__header {
+    margin: 0;
+  }
+
+  .faq-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--c-ink);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    gap: 1rem;
+    transition: background-color var(--duration-fast) ease;
+  }
+
+  .faq-button:hover {
+    background-color: var(--c-ivory-bg);
+  }
+
+  .faq-button__icon {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--c-orange-text-ivory, #A83B12);
+    flex-shrink: 0;
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.25rem 1.5rem;
+    border-top: 1px solid var(--c-rule-light);
+    padding-top: 1rem;
+  }
+
+  .faq-answer__text {
+    font-size: 0.975rem;
+    color: var(--c-ink-muted);
+    line-height: 1.6;
+  }
+</style>

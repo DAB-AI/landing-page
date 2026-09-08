@@ -1,0 +1,32 @@
+/* Motion Utilities */
+
+.animate-fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeIn var(--duration-narrative) var(--ease-default) forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .animate-fade-in {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}

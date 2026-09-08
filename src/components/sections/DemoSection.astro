@@ -1,0 +1,376 @@
+---
+import SectionIntro from '../ui/SectionIntro.astro';
+import { WorkflowDemo } from '../islands/WorkflowDemo';
+import { homeContent } from '../../content/home.es';
+
+const { demoSection } = homeContent;
+---
+
+<section class="demo-section section section--canvas" id="demo-rfq">
+  <div class="container">
+    <SectionIntro
+      eyebrow={demoSection.eyebrow}
+      title={demoSection.title}
+      intro={demoSection.intro}
+    />
+
+    <div class="demo-section__wrapper">
+      <WorkflowDemo client:visible />
+    </div>
+  </div>
+</section>
+
+<style>
+  .demo-section {
+    background-color: var(--c-ivory-bg);
+  }
+
+  .demo-section__wrapper {
+  }
+</style>
+
+<style is:global>
+  /* Global Styles for WorkflowDemo React Island — R7 Control Panel Surface */
+  .r7-demo-surface {
+    background-color: #FFFFFF;
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-panel);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    color: var(--c-ink);
+    font-family: var(--font-sans);
+  }
+
+  .r7-demo-surface:focus-visible {
+    outline: 2px solid var(--c-orange-accent);
+    outline-offset: 2px;
+  }
+
+  /* Topbar Header */
+  .r7-demo-topbar {
+    background-color: var(--c-olive-darker);
+    color: var(--c-text-inverse);
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--c-rule-dark);
+  }
+
+  .r7-demo-badge {
+    font-family: var(--font-mono);
+    font-size: 0.725rem;
+    font-weight: 500;
+    color: var(--c-orange-text-olive, #EF6634);
+    letter-spacing: 0.08em;
+    border: 1px solid var(--c-orange-text-olive, #EF6634);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-small);
+  }
+
+  .r7-demo-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .r7-demo-status-tag {
+    font-family: var(--font-mono);
+    font-size: 0.725rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-small);
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .r7-demo-status-tag.status--exception {
+    background-color: var(--c-orange-accent);
+    color: #FFFFFF;
+  }
+
+  .r7-demo-status-tag.status--reviewing {
+    background-color: #E29B27;
+    color: #111412;
+  }
+
+  .r7-demo-status-tag.status--approved {
+    background-color: #2C6B3F;
+    color: #FFFFFF;
+  }
+
+  /* Main Grid */
+  .r7-demo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .r7-demo-grid {
+      grid-template-columns: 5fr 7fr;
+      gap: 2rem;
+    }
+  }
+
+  .r7-demo-col-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--c-ink-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  /* Step Cards List */
+  .r7-demo-step-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .r7-step-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    background-color: var(--c-ivory-bg);
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-small);
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+    width: 100%;
+  }
+
+  .r7-step-card:hover {
+    border-color: var(--c-ink);
+  }
+
+  .r7-step-card--active {
+    background-color: #FFFFFF;
+    border-color: var(--c-orange-accent);
+    box-shadow: 0 2px 8px rgba(199, 71, 22, 0.12);
+  }
+
+  .r7-step-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--c-orange-text-ivory, #A83B12);
+    background-color: rgba(199, 71, 22, 0.08);
+    padding: 0.2rem 0.4rem;
+    border-radius: var(--radius-small);
+    white-space: nowrap;
+  }
+
+  .r7-step-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--c-ink);
+  }
+
+  .r7-step-detail {
+    font-size: 0.825rem;
+    color: var(--c-ink-muted);
+    line-height: 1.45;
+    margin-top: 0.4rem;
+  }
+
+  /* Detail Column */
+  .r7-demo-col-detail {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .r7-demo-col-detail {
+      justify-content: space-between;
+      gap: 0;
+    }
+  }
+
+  .r7-sources-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  @media (min-width: 600px) {
+    .r7-sources-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .r7-source-pill {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--c-ink);
+    background-color: var(--c-ivory-bg);
+    border: 1px solid var(--c-rule-light);
+    padding: 0.5rem 0.65rem;
+    border-radius: var(--radius-small);
+    text-align: center;
+  }
+
+  .r7-detail-card {
+    background-color: var(--c-olive-darker);
+    color: var(--c-text-inverse);
+    border-radius: var(--radius-panel);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .r7-detail-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-rule-dark);
+  }
+
+  .r7-detail-num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--c-orange-text-olive, #EF6634);
+  }
+
+  .r7-detail-title {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .r7-detail-text {
+    font-size: 0.925rem;
+    color: var(--c-text-muted-inverse);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+  }
+
+  .r7-rules-box {
+    background-color: #0E120F;
+    border: 1px solid var(--c-rule-dark);
+    border-radius: var(--radius-small);
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.775rem;
+  }
+
+  .r7-box-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .r7-box-row--exception {
+    color: var(--c-orange-text-olive, #EF6634);
+  }
+
+  .r7-box-label {
+    color: var(--c-text-muted-inverse);
+  }
+
+  .r7-box-val {
+    color: var(--c-text-inverse);
+    font-weight: 500;
+  }
+
+  .r7-box-row--exception .r7-box-val {
+    color: var(--c-orange-text-olive, #EF6634);
+  }
+
+  /* Controls Bar */
+  .r7-controls-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    padding-top: 0.5rem;
+  }
+
+  .r7-ctrl-btn {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    background-color: var(--c-ivory-bg);
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-small);
+    color: var(--c-ink);
+    cursor: pointer;
+    transition: all var(--duration-fast) ease;
+  }
+
+  .r7-ctrl-btn:hover:not(:disabled) {
+    background-color: #EAE6DC;
+  }
+
+  .r7-ctrl-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .r7-ctrl-btn--primary {
+    background-color: var(--c-orange-accent);
+    color: #FFFFFF;
+    border-color: var(--c-orange-accent);
+    font-weight: 600;
+  }
+
+  .r7-ctrl-btn--primary:hover:not(:disabled) {
+    background-color: #B23D12;
+  }
+
+  .r7-step-indicator {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--c-ink-muted);
+  }
+
+  .r7-demo-disclaimer {
+    background-color: var(--c-ivory-bg);
+    padding: 0.65rem 1.25rem;
+    text-align: center;
+    font-size: 0.775rem;
+    color: var(--c-ink-muted);
+    border-top: 1px solid var(--c-rule-light);
+  }
+
+  @media (max-width: 899px) {
+    .r7-demo-grid,
+    .r7-demo-col-steps,
+    .r7-demo-col-detail,
+    .r7-sources-grid,
+    .r7-detail-card,
+    .r7-controls-bar {
+      height: auto;
+      min-height: 0;
+    }
+
+    .r7-sources-grid {
+      margin-bottom: 0;
+    }
+
+    .r7-detail-card {
+      margin-bottom: 0;
+    }
+
+    .r7-controls-bar {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  }
+</style>

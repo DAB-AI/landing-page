@@ -1,0 +1,99 @@
+---
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'secondary' | 'olive';
+  size?: 'md' | 'lg';
+  type?: 'button' | 'submit';
+  class?: string;
+  id?: string;
+}
+
+const {
+  href,
+  variant = 'primary',
+  size = 'md',
+  type = 'button',
+  class: className = '',
+  id
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  id={id}
+  class={`btn btn--${variant} btn--${size} ${className}`}
+>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--radius-small);
+    transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease, transform var(--duration-fast) ease;
+    cursor: pointer;
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--text-body);
+    line-height: 1.2;
+    text-align: center;
+    border: 1px solid transparent;
+  }
+
+  .btn--md {
+    min-height: 48px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .btn--lg {
+    min-height: 52px;
+    padding: 0.85rem 1.75rem;
+    font-size: 1.125rem;
+  }
+
+  .btn--primary {
+    background-color: var(--color-orange-700);
+    color: #FFFFFF;
+    border-color: var(--color-orange-700);
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-orange-500);
+    border-color: var(--color-orange-500);
+  }
+
+  .btn--secondary {
+    background-color: var(--color-surface);
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+
+  .btn--secondary:hover {
+    background-color: #F5F5ED;
+    border-color: var(--color-muted);
+  }
+
+  .btn--olive {
+    background-color: var(--color-olive-600);
+    color: #FFFFFF;
+    border-color: var(--color-olive-600);
+  }
+
+  .btn--olive:hover {
+    background-color: var(--color-olive-800);
+    border-color: var(--color-olive-800);
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+</style>

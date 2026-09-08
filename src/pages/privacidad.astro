@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { privacyContent, isPrivacyApproved } from '../content/privacy';
+---
+<BaseLayout title="Aviso de Privacidad | DAB Tech" description="Tratamiento del diagnóstico, contacto por WhatsApp y derechos ARCO en DAB Tech." noIndex={!isPrivacyApproved}>
+  <div class="privacy-page section">
+    <div class="container container--narrow">
+      <header class="privacy-header">
+        <h1 class="privacy-title">{privacyContent.title}</h1>
+        <p class="privacy-meta">Versión: {privacyContent.version} · Última actualización: {privacyContent.lastUpdated}</p>
+      </header>
+      {isPrivacyApproved ? (
+        <article class="privacy-article">
+          {privacyContent.sections.map(section => (
+            <section class="privacy-section">
+              <h2>{section.title}</h2>
+              {section.paragraphs.map(text => <p>{text}</p>)}
+            </section>
+          ))}
+        </article>
+      ) : <p role="status">Aviso de privacidad pendiente de validación del responsable.</p>}
+      <div class="privacy-footer-nav"><a href="/" class="btn-back">← Volver al inicio</a></div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .privacy-page {
+    padding-top: 6rem;
+    padding-bottom: 5rem;
+    background-color: var(--c-ivory-bg);
+    color: var(--c-ink);
+  }
+
+  .container--narrow {
+    max-width: 800px;
+  }
+
+  .privacy-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--c-rule-light);
+  }
+
+  .privacy-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    color: var(--c-ink);
+  }
+
+  .privacy-meta {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--c-ink-muted);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .privacy-article {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .privacy-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--c-ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .privacy-section p {
+    font-size: 0.975rem;
+    line-height: 1.6;
+    color: var(--c-ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .privacy-footer-nav {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--c-rule-light);
+  }
+
+  .btn-back {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--c-orange-accent);
+    text-decoration: none;
+  }
+
+  .btn-back:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+</style>

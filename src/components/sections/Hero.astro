@@ -1,0 +1,243 @@
+---
+import Button from '../ui/Button.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import { homeContent } from '../../content/home.es';
+
+const { hero } = homeContent;
+---
+
+<section class="hero section section--olive-dark" id="hero">
+  <div class="hero__bg-container" aria-hidden="true">
+    <img
+      id="hero-workflow-poster"
+      src="/assets/hero/hero-workflows-poster.webp"
+      alt=""
+      class="hero-bg-poster"
+      width="1280"
+      height="720"
+      loading="eager"
+      decoding="async"
+    />
+    <video
+      id="hero-workflow-video"
+      poster="/assets/hero/hero-workflows-poster.webp"
+      muted
+      loop
+      playsinline
+      class="hero-bg-video hero-video--hidden"
+    >
+    </video>
+    <div class="hero__vignette"></div>
+  </div>
+
+  <div class="container hero__container">
+    <div class="hero__content">
+      <Eyebrow text={hero.eyebrow} variant="orange" />
+      <h1 class="hero__title">{hero.title}</h1>
+      <p class="hero__body">{hero.body}</p>
+
+      <div class="hero__actions">
+        <Button href={hero.primaryCta.href} variant="primary" size="lg" id="hero-primary-cta">
+          {hero.primaryCta.label}
+        </Button>
+        <Button href={hero.secondaryCta.href} variant="secondary" size="lg">
+          {hero.secondaryCta.label}
+        </Button>
+      </div>
+
+      <div class="hero__note">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
+        <span>{hero.note}</span>
+      </div>
+
+      <div class="hero__video-legend" id="hero-video-legend">
+        <span>Representación visual con material de archivo.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    const video = document.getElementById('hero-workflow-video') as HTMLVideoElement | null;
+    const poster = document.getElementById('hero-workflow-poster') as HTMLImageElement | null;
+    if (!video) return;
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileQuery = window.matchMedia('(max-width: 768px)');
+    let sourcesLoaded = false;
+
+    function loadAndPlayVideo() {
+      if (!video) return;
+      if (!sourcesLoaded) {
+        sourcesLoaded = true;
+        const webm = document.createElement('source');
+        webm.src = '/assets/hero/hero-workflows.webm';
+        webm.type = 'video/webm';
+
+        const mp4 = document.createElement('source');
+        mp4.src = '/assets/hero/hero-workflows.mp4';
+        mp4.type = 'video/mp4';
+
+        video.appendChild(webm);
+        video.appendChild(mp4);
+        video.load();
+      }
+
+      video.classList.remove('hero-video--hidden');
+      if (poster) poster.style.display = 'none';
+      video.setAttribute('autoplay', '');
+      video.play().catch(() => {});
+    }
+
+    function unloadOrPauseVideo() {
+      if (!video) return;
+      video.pause();
+      video.removeAttribute('autoplay');
+      video.classList.add('hero-video--hidden');
+      if (poster) poster.style.display = 'block';
+
+      while (video.firstChild) {
+        video.removeChild(video.firstChild);
+      }
+      if (sourcesLoaded) {
+        video.load();
+        sourcesLoaded = false;
+      }
+    }
+
+    function evaluateState() {
+      const isReduced = motionQuery.matches;
+      const isMobile = mobileQuery.matches;
+
+      if (isReduced || isMobile) {
+        unloadOrPauseVideo();
+      } else {
+        loadAndPlayVideo();
+      }
+    }
+
+    evaluateState();
+
+    const handleChange = () => evaluateState();
+    if (motionQuery.addEventListener) {
+      motionQuery.addEventListener('change', handleChange);
+      mobileQuery.addEventListener('change', handleChange);
+    } else if ('addListener' in motionQuery) {
+      (motionQuery as any).addListener(handleChange);
+      (mobileQuery as any).addListener(handleChange);
+    }
+  })();
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: clamp(6.5rem, 10vw, 9rem);
+    padding-bottom: clamp(4rem, 7vw, 6.5rem);
+    background-color: var(--c-olive-darker);
+    color: var(--c-text-inverse);
+    overflow: hidden;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero__bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-bg-poster,
+  .hero-bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center right;
+    display: block;
+    opacity: 0.45;
+    filter: brightness(0.7) contrast(1.1);
+  }
+
+  .hero-video--hidden {
+    display: none !important;
+  }
+
+  .hero__vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(20, 26, 22, 0.96) 0%,
+      rgba(20, 26, 22, 0.88) 45%,
+      rgba(20, 26, 22, 0.5) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+
+  .hero__content {
+    max-width: 680px;
+  }
+
+  .hero__title {
+    font-size: clamp(2.1rem, 4.2vw, 3.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 1.25rem;
+    color: var(--c-text-inverse);
+  }
+
+  .hero__body {
+    font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+    line-height: 1.55;
+    color: var(--c-text-muted-inverse);
+    margin-bottom: 2rem;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__note {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--c-text-muted-inverse);
+  }
+
+  .hero__note svg {
+    color: var(--c-orange-text-olive, #EF6634);
+    flex-shrink: 0;
+  }
+
+  .hero__video-legend {
+    margin-top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--c-text-muted-inverse);
+    opacity: 0.85;
+    letter-spacing: 0.02em;
+  }
+</style>

@@ -1,0 +1,17 @@
+{
+  "description": "Ritmo R7.2 aprobado por el propietario; SHA-256 de texto UTF-8 con saltos LF. Actualizar solo tras aprobaci\u00f3n expl\u00edcita de cambios visuales.",
+  "files": {
+    "src/components/sections/ProblemSignals.astro": "a781920b55020c1c57ba6c61f8a6820742039e1d0e2650d0a8bdc026f599fe3a",
+    "src/components/sections/WorkflowSteps.astro": "6f478d7de626daaa885f085bc9649e2101ccb54ced505f161ac6d18526d113a9",
+    "src/components/sections/DemoSection.astro": "1d6826087f010393e0ee0a6682222f45f49091781ee770f19e97b7557fddf55d",
+    "src/components/islands/WorkflowDemo.tsx": "d9edc0bcab9d1ee90a2e2406989aae7c8aeac00ae9c2f63241d9ef3937e80215",
+    "src/components/sections/AutonomySection.astro": "233c3b1c5c5df6c34654fa5a796e051fdeb68c5990777c7833dc15bcda5c3f0f",
+    "src/components/sections/WedgeList.astro": "1f5341205c84d1f3c7e95f08aa2c42959ac9a3ff5ddd35ea26c60c161b9ca623",
+    "src/components/sections/MethodTimeline.astro": "90349374563b37e0ebbcba2fafdd81518c4c729cb4653300148250a27dd64c0d",
+    "src/components/sections/MeasurementFrame.astro": "910329456c6d09ef7d25b4bce5656b69b810d193eeba5b228b5fb90d28f1be4e",
+    "src/components/sections/FAQ.astro": "4ae3962d8a080a45460b9532f3316035b4591074d63ceec582376607531297e0",
+    "src/styles/tokens.css": "e0e69a49922201686a9e950a9bf6b9004c68c2ae2ced10acf80e16058fd4e8cd",
+    "src/styles/global.css": "c21f5695feafdb77d9b755561fbd8c8ecf5e7ac7fd049cdb6cce9b1060441d71",
+    "src/styles/motion.css": "6e5210693ef7f1dd2969234bab34124fda7c6d002529ff0276ed59c216c27cb3"
+  }
+}

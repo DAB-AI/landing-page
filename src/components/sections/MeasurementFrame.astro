@@ -1,0 +1,163 @@
+---
+import SectionIntro from '../ui/SectionIntro.astro';
+import { homeContent } from '../../content/home.es';
+
+const { measurementFrame } = homeContent;
+---
+
+<section class="measurement-frame section section--surface" id="evidencia">
+  <div class="container">
+    <SectionIntro
+      eyebrow={measurementFrame.eyebrow}
+      title={measurementFrame.title}
+    />
+
+    <div class="measurement-grid">
+      <!-- Baseline Column -->
+      <div class="measurement-card">
+        <div class="measurement-card__header">
+          <span class="measurement-card__badge badge--baseline">ESTADO INICIAL</span>
+          <h3 class="measurement-card__title">{measurementFrame.baseline.title}</h3>
+        </div>
+        <ul class="measurement-card__list">
+          {measurementFrame.baseline.items.map((item) => (
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="list-icon" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- After Column -->
+      <div class="measurement-card measurement-card--after">
+        <div class="measurement-card__header">
+          <span class="measurement-card__badge badge--after">RESULTADO EVALUADO</span>
+          <h3 class="measurement-card__title">{measurementFrame.after.title}</h3>
+        </div>
+        <ul class="measurement-card__list">
+          {measurementFrame.after.items.map((item) => (
+            <li>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="list-icon list-icon--check" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="measurement-closure">
+      <p>{measurementFrame.closure}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .measurement-frame {
+    background-color: var(--c-ivory-surface);
+    border-top: 1px solid var(--c-rule-light);
+    border-bottom: 1px solid var(--c-rule-light);
+  }
+
+  .measurement-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: var(--section-content-gap);
+  }
+
+  @media (min-width: 768px) {
+    .measurement-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .measurement-card {
+    background-color: var(--c-ivory-bg);
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-panel);
+    padding: 2rem 1.75rem;
+  }
+
+  .measurement-card--after {
+    border-color: var(--c-orange-accent);
+    background-color: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .measurement-card__badge {
+    font-family: var(--font-mono);
+    font-size: 0.725rem;
+    font-weight: 500;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-small);
+    display: inline-block;
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .badge--baseline {
+    background-color: var(--c-ivory-bg);
+    color: var(--c-ink-muted);
+    border: 1px solid var(--c-rule-light);
+  }
+
+  .badge--after {
+    background-color: var(--c-orange-badge-bg, #B83E10);
+    color: #FFFFFF;
+    font-weight: 600;
+  }
+
+  .measurement-card__title {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--c-ink);
+    margin-bottom: 1.25rem;
+  }
+
+  .measurement-card__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .measurement-card__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--c-ink);
+    line-height: 1.5;
+  }
+
+  .list-icon {
+    margin-top: 3px;
+    flex-shrink: 0;
+    color: var(--c-ink-muted);
+  }
+
+  .list-icon--check {
+    color: var(--c-orange-accent);
+  }
+
+  .measurement-closure {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--c-ink);
+    background-color: var(--c-ivory-bg);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-small);
+    border: 1px solid var(--c-rule-light);
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

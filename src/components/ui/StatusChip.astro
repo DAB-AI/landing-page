@@ -1,0 +1,90 @@
+---
+interface Props {
+  status: 'connected' | 'reviewing' | 'exception' | 'approved' | 'posted' | 'neutral';
+  label: string;
+  class?: string;
+}
+
+const { status, label, class: className = '' } = Astro.props;
+---
+
+<span class={`status-chip status-chip--${status} ${className}`}>
+  <span class="status-chip__dot" aria-hidden="true"></span>
+  <span class="status-chip__label">{label}</span>
+</span>
+
+<style>
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1;
+    border: 1px solid transparent;
+  }
+
+  .status-chip__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .status-chip--connected {
+    background-color: var(--color-olive-100);
+    color: var(--color-olive-800);
+    border-color: #CBD6B5;
+  }
+  .status-chip--connected .status-chip__dot {
+    background-color: var(--color-olive-600);
+  }
+
+  .status-chip--reviewing {
+    background-color: var(--color-orange-100);
+    color: var(--color-orange-700);
+    border-color: #F7C6AE;
+  }
+  .status-chip--reviewing .status-chip__dot {
+    background-color: var(--color-orange-500);
+  }
+
+  .status-chip--exception {
+    background-color: #FDE8E7;
+    color: var(--color-critical);
+    border-color: #F5B8B5;
+  }
+  .status-chip--exception .status-chip__dot {
+    background-color: var(--color-critical);
+  }
+
+  .status-chip--approved {
+    background-color: #E8EFE3;
+    color: var(--color-olive-800);
+    border-color: #B9CEAF;
+  }
+  .status-chip--approved .status-chip__dot {
+    background-color: var(--color-olive-800);
+  }
+
+  .status-chip--posted {
+    background-color: #EAECE8;
+    color: var(--color-ink);
+    border-color: var(--color-line);
+  }
+  .status-chip--posted .status-chip__dot {
+    background-color: var(--color-ink);
+  }
+
+  .status-chip--neutral {
+    background-color: var(--color-surface);
+    color: var(--color-muted);
+    border-color: var(--color-line);
+  }
+  .status-chip--neutral .status-chip__dot {
+    background-color: var(--color-muted);
+  }
+</style>

@@ -1,0 +1,133 @@
+---
+import SectionIntro from '../ui/SectionIntro.astro';
+import { homeContent } from '../../content/home.es';
+
+const { methodTimeline } = homeContent;
+---
+
+<section class="method-timeline section section--canvas" id="metodo">
+  <div class="container">
+    <SectionIntro
+      eyebrow={methodTimeline.eyebrow}
+      title={methodTimeline.title}
+    />
+
+    <div class="timeline-container">
+      {methodTimeline.phases.map((phase, idx) => (
+        <div class="timeline-item">
+          <div class="timeline-item__marker">
+            <span class="marker-dot"></span>
+            {idx < methodTimeline.phases.length - 1 && <span class="marker-line"></span>}
+          </div>
+
+          <div class="timeline-item__card">
+            <span class="timeline-item__step">FASE 0{idx + 1}</span>
+            <h3 class="timeline-item__title">{phase.name}</h3>
+            <p class="timeline-item__desc">{phase.description}</p>
+            <div class="timeline-item__output">
+              <span class="output-label">ENTREGABLE / GATE:</span>
+              <span class="output-val">{phase.output}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .method-timeline {
+    background-color: var(--c-ivory-bg);
+  }
+
+  .timeline-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 900px;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 1.25rem;
+    align-items: flex-start;
+  }
+
+  .timeline-item__marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    position: relative;
+    padding-top: 0.4rem;
+  }
+
+  .marker-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--c-orange-accent);
+    z-index: 2;
+  }
+
+  .marker-line {
+    width: 1px;
+    background-color: var(--c-rule-light);
+    flex-grow: 1;
+    margin-top: 0.4rem;
+  }
+
+  .timeline-item__card {
+    background-color: #FFFFFF;
+    border: 1px solid var(--c-rule-light);
+    border-radius: var(--radius-panel);
+    padding: 1.5rem 1.75rem;
+  }
+
+  .timeline-item__step {
+    font-family: var(--font-mono);
+    font-size: 0.725rem;
+    font-weight: 500;
+    color: var(--c-orange-text-ivory, #A83B12);
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline-item__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--c-ink);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-item__desc {
+    font-size: 0.95rem;
+    color: var(--c-ink-muted);
+    line-height: 1.55;
+    margin-bottom: 1.15rem;
+  }
+
+  .timeline-item__output {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--c-rule-light);
+    font-size: 0.85rem;
+  }
+
+  .output-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--c-orange-text-ivory, #A83B12);
+    letter-spacing: 0.05em;
+  }
+
+  .output-val {
+    color: var(--c-ink);
+    font-weight: 500;
+  }
+</style>

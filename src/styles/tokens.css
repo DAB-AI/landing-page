@@ -1,0 +1,70 @@
+:root {
+  /* R7 Palette Tokens — Cinematic Institutional & Sober Accent */
+  --c-ivory-bg: #F7F5F0;
+  --c-ivory-surface: #FFFFFF;
+  --c-olive-deep: #1C241E;
+  --c-olive-darker: #141A16;
+  --c-ink: #111412;
+  --c-ink-muted: #4A524C;
+  --c-orange-accent: #C74716; /* Sober action/exception orange */
+  --c-orange-text-ivory: #A83B12; /* Accessible orange text on light/ivory backgrounds (Contrast >= 5.1:1) */
+  --c-orange-text-olive: #EF6634; /* Accessible orange text on dark olive backgrounds (Contrast >= 6.2:1) */
+  --c-orange-badge-bg: #B83E10; /* Accessible dark orange background for white text (Contrast >= 4.6:1) */
+  --c-orange-glow: rgba(199, 71, 22, 0.12);
+  --c-text-inverse: #F4F6F4;
+  --c-text-muted-inverse: #A1AAA0;
+  --c-rule-light: #E2DFD7;
+  --c-rule-dark: #2A332C;
+
+  /* Legacy Aliases for Baseline Compatibility */
+  --color-canvas: var(--c-ivory-bg);
+  --color-surface: var(--c-ivory-surface);
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-ink-muted);
+  --color-line: var(--c-rule-light);
+
+  --color-olive-800: var(--c-olive-deep);
+  --color-olive-600: #2C382F;
+  --color-olive-100: #EAE7DF;
+
+  --color-orange-700: var(--c-orange-accent);
+  --color-orange-500: var(--c-orange-accent);
+  --color-orange-100: var(--c-orange-glow);
+
+  --color-critical: #9D2B25;
+
+  /* Layout & Spacing */
+  --container-max: 1240px;
+  --max-width: 1240px;
+  --container-padding: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* Editorial section rhythm; --section-space is the existing desktop role. */
+  --section-space: clamp(6rem, 8vw, 8rem);
+  --section-space-compact: clamp(4.5rem, 6vw, 6rem);
+  --section-space-mobile: 4rem;
+  --section-intro-gap: 2.5rem;
+  --section-content-gap: 3rem;
+
+  /* Typography Scale */
+  --text-display: clamp(2.2rem, 4.5vw, 3.6rem);
+  --text-h2: clamp(1.8rem, 3.2vw, 2.5rem);
+  --text-h3: 1.3rem;
+  --text-body-large: clamp(1.05rem, 1.8vw, 1.25rem);
+  --text-body: 1rem;
+  --copy-measure: 640px;
+
+  /* Strict Radii (0px - 8px max) */
+  --radius-sharp: 0px;
+  --radius-small: 4px;
+  --radius-panel: 8px;
+  --radius-pill: 9999px;
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 350ms;
+
+  /* Self-Hosted Typography */
+  --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', SFMono-Regular, Consolas, 'Liberation Mono', monospace;
+}

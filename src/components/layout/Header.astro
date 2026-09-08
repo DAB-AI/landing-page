@@ -1,0 +1,393 @@
+---
+import Button from '../ui/Button.astro';
+import { homeContent } from '../../content/home.es';
+
+const { nav } = homeContent;
+const isHome = Astro.url.pathname === '/' || Astro.url.pathname === '';
+const getHref = (href: string) => {
+  if (href.startsWith('#')) {
+    return isHome ? href : `/${href}`;
+  }
+  return href;
+};
+---
+
+<header class="header" id="site-header">
+  <div class="container header__container">
+    <a href="/" class="header__brand" aria-label="DAB Tech Inicio">
+      <span class="brand-bold">DAB</span>
+      <span class="brand-slash">/</span>
+      <span class="brand-light">TECH</span>
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="header__nav desktop-only" aria-label="Navegación principal">
+      <ul class="header__links">
+        {nav.links.map((link) => (
+          <li>
+            <a href={getHref(link.href)} class="header__link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="header__actions desktop-only">
+      <Button href={getHref(nav.cta.href)} variant="primary" size="md" id="header-primary-cta">
+        {nav.cta.label}
+      </Button>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button
+      type="button"
+      class="header__toggle"
+      id="mobile-menu-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Abrir menú de navegación"
+    >
+      <span class="toggle-bar"></span>
+      <span class="toggle-bar"></span>
+      <span class="toggle-bar"></span>
+    </button>
+  </div>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-menu" id="mobile-menu" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Navegación móvil">
+    <div class="container mobile-menu__container">
+      <div class="mobile-menu__top">
+        <a href="/" class="header__brand" aria-label="DAB Tech Inicio">
+          <span class="brand-bold">DAB</span>
+          <span class="brand-slash">/</span>
+          <span class="brand-light">TECH</span>
+        </a>
+        <button
+          type="button"
+          class="mobile-menu__close"
+          id="mobile-menu-close"
+          aria-label="Cerrar menú de navegación"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="Navegación móvil principal">
+        <ul class="mobile-menu__links">
+          {nav.links.map((link) => (
+            <li>
+              <a href={getHref(link.href)} class="mobile-menu__link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      <div class="mobile-menu__cta">
+        <Button href={getHref(nav.cta.href)} variant="primary" size="lg" class="w-full">
+          {nav.cta.label}
+        </Button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Header scroll transition & Mobile menu accessibility
+  const header = document.getElementById('site-header');
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const closeBtn = document.getElementById('mobile-menu-close');
+  const menu = document.getElementById('mobile-menu');
+
+  function getFocusableElements(): HTMLElement[] {
+    if (!menu) return [];
+    const selector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    return Array.from(menu.querySelectorAll<HTMLElement>(selector)).filter(
+      (el) => el.offsetWidth > 0 || el.offsetHeight > 0 || el === closeBtn
+    );
+  }
+
+  function handleScroll() {
+    if (window.scrollY > 30) {
+      header?.classList.add('header--scrolled');
+    } else {
+      header?.classList.remove('header--scrolled');
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
+
+  function openMenu() {
+    toggle?.setAttribute('aria-expanded', 'true');
+    toggle?.setAttribute('aria-label', 'Cerrar menú de navegación');
+    menu?.setAttribute('aria-hidden', 'false');
+    menu?.classList.add('mobile-menu--open');
+    document.body.classList.add('mobile-nav-open');
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+      closeBtn?.focus();
+    }, 50);
+  }
+
+  function closeMenu() {
+    toggle?.setAttribute('aria-expanded', 'false');
+    toggle?.setAttribute('aria-label', 'Abrir menú de navegación');
+    menu?.setAttribute('aria-hidden', 'true');
+    menu?.classList.remove('mobile-menu--open');
+    document.body.classList.remove('mobile-nav-open');
+    document.body.style.overflow = '';
+  }
+
+  function closeMenuAndFocusTrigger() {
+    closeMenu();
+    toggle?.focus();
+  }
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    if (isOpen) closeMenuAndFocusTrigger(); else openMenu();
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    closeMenuAndFocusTrigger();
+  });
+
+  const links = menu?.querySelectorAll('a');
+  links?.forEach((link) => {
+    link.addEventListener('click', () => {
+      closeMenu();
+    });
+  });
+
+  window.addEventListener('keydown', (e) => {
+    const isOpen = toggle?.getAttribute('aria-expanded') === 'true';
+    if (!isOpen) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      closeMenuAndFocusTrigger();
+      return;
+    }
+
+    if (e.key === 'Tab') {
+      const focusables = getFocusableElements();
+      if (focusables.length === 0) return;
+      const firstEl = focusables[0];
+      const lastEl = focusables[focusables.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstEl || !menu?.contains(document.activeElement)) {
+          e.preventDefault();
+          lastEl.focus();
+        }
+      } else {
+        if (document.activeElement === lastEl || !menu?.contains(document.activeElement)) {
+          e.preventDefault();
+          firstEl.focus();
+        }
+      }
+    }
+  });
+</script>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.1rem 0;
+    transition: background-color var(--duration-base) ease, padding var(--duration-base) ease, border-color var(--duration-base) ease;
+    background-color: var(--c-olive-deep);
+    border-bottom: 1px solid var(--c-rule-dark);
+  }
+
+  .header--scrolled {
+    background-color: var(--c-olive-darker);
+    padding: 0.8rem 0;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  }
+
+  .header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header__brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-sans);
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .brand-bold {
+    font-weight: 600;
+    color: var(--c-text-inverse);
+  }
+
+  .brand-slash {
+    color: var(--c-orange-text-olive, #EF6634);
+    font-weight: 500;
+  }
+
+  .brand-light {
+    font-weight: 400;
+    color: var(--c-text-muted-inverse);
+  }
+
+  .header__links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .header__link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--c-text-muted-inverse);
+    text-decoration: none;
+    transition: color var(--duration-fast) ease;
+  }
+
+  .header__link:hover,
+  .header__link:focus-visible {
+    color: var(--c-text-inverse);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
+  /* Hamburger toggle: hidden by default, shown only below 900px */
+  .header__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border-radius: var(--radius-small);
+    background: transparent;
+    border: 1px solid var(--c-rule-dark);
+    cursor: pointer;
+  }
+
+  .header__toggle:focus-visible {
+    outline: 2px solid var(--c-orange-accent);
+  }
+
+  .toggle-bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--c-text-inverse);
+    transition: transform var(--duration-fast) ease;
+  }
+
+  @media (min-width: 900px) {
+    .desktop-only {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 899px) {
+    .header__toggle {
+      display: flex;
+    }
+  }
+
+  /* Mobile Menu Drawer */
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--c-olive-darker);
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.1rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform var(--duration-base) ease, opacity var(--duration-base) ease, visibility var(--duration-base) ease;
+    z-index: 101;
+  }
+
+  .mobile-menu--open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .mobile-menu__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--c-rule-dark);
+  }
+
+  .mobile-menu__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    background: transparent;
+    border: 1px solid var(--c-rule-dark);
+    border-radius: var(--radius-small);
+    color: var(--c-text-inverse);
+    cursor: pointer;
+    transition: background-color var(--duration-fast) ease, border-color var(--duration-fast) ease;
+  }
+
+  .mobile-menu__close:hover,
+  .mobile-menu__close:focus-visible {
+    border-color: var(--c-orange-accent);
+    color: var(--c-orange-accent);
+  }
+
+  .mobile-menu__links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .mobile-menu__link {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--c-text-inverse);
+    text-decoration: none;
+    display: block;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--c-rule-dark);
+    transition: color var(--duration-fast) ease;
+  }
+
+  .mobile-menu__link:hover,
+  .mobile-menu__link:focus-visible {
+    color: var(--c-orange-accent);
+  }
+
+  .mobile-menu__cta {
+    margin-top: 2rem;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+</style>
