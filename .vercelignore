@@ -1,0 +1,11 @@
+.git/
+.vercel/
+.astro/
+node_modules/
+dist/
+_local/
+coverage/
+.env
+.env.*
+*.zip
+*.log
