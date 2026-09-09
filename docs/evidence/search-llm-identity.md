@@ -35,6 +35,7 @@ Historical terms found in tracked, current code were classified as follows:
 - `src/pages/site.webmanifest.ts`
 - `src/pages/sitemap.xml.ts`
 - `tests/search-identity.test.ts`
+- `vercel.json`
 - `public/robots.txt` (replaced by a generated static endpoint)
 - `public/sitemap.xml` (replaced by a generated static endpoint)
 - `docs/evidence/search-llm-identity.md`
@@ -117,7 +118,7 @@ No contradictory company identity was found in public metadata.
 ## External gaps
 
 - No Git remote is configured, so `git fetch origin main` and branch push cannot be performed.
-- Domain redirects are controlled in Vercel rather than in tracked repository configuration. The observed apex-to-www 308 supports the selected canonical host, but every redirect variant must be reconfirmed after deployment.
+- The apex-to-www redirect is defined in `vercel.json`; every redirect variant must still be reconfirmed after deployment.
 - No Google or Bing verification token was found in the repository.
 - Existing analytics origin checks still target `https://dabtech.me`; they were intentionally left unchanged because analytics changes are outside this task. Their behavior on the current www production host should be reviewed separately.
 
