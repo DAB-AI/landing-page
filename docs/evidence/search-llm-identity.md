@@ -135,3 +135,21 @@ No contradictory company identity was found in public metadata.
    - submit the sitemap;
    - request a recrawl if appropriate.
 5. Check the brand result after search engines have recrawled the site. Snippet changes are not immediate or guaranteed.
+
+## Revalidation — 2026-09-09
+
+- Branch: `chore/search-llm-identity-v2`
+- Base: `origin/main` at `93559aa33d8f124c57f88b7c23181d0d17486136`
+- The pre-existing user modification in `.gitignore` was preserved and excluded from this work.
+- The centralized identity, canonical host, metadata, JSON-LD graph, `/empresa/`, `/robots.txt`, `/sitemap.xml`, web manifest, and `/llms.txt` were audited and retained because they already satisfy the brief.
+- Corrected the remaining public copy `Piloto controlled` to `Piloto controlado` in `src/content/home.es.ts`.
+- Legacy output scan found only legitimate `Metepec`, `WhatsApp`, and `marketing` references inside the unchanged privacy notice. No public output identifies DAB Tech as the former agency or as a chatbot, salon, beauty, or marketing-focused provider.
+- Generated-output entity test answers consistently: DAB Tech; AI-operated systems integrated into existing business processes; Mexican companies; Estado de México, México; RFQ and quotations, collections and credit, orders and reconciliation; progressive AI autonomy with human review, exception ownership, and measured results; canonical URL `https://www.dabtech.me/`.
+- `npm ci`: PASS.
+- `npm run build`: PASS; Astro Check reported 0 errors, 0 warnings, and 0 hints.
+- `npm test`: PASS; 24/24 tests.
+- JSON-LD parsing through `tests/search-identity.test.ts`: PASS.
+- `git diff --check`: PASS for this work; the only message is a line-ending warning from the user's pre-existing `.gitignore` change.
+- No lint script exists in `package.json`.
+- IndexNow remains a FOLLOW-UP: Vercel can serve the protocol's root ownership key file, but a key and deployment-triggered submission are still required. No key or deployment automation was introduced in this LOOP. References: https://www.indexnow.org/documentation and https://vercel.com/docs/build-output-api/primitives.
+- Post-deploy manual actions remain Google Search Console inspection/indexing for `/` and `/empresa/`, sitemap verification, and equivalent Bing Webmaster Tools registration/submission/refresh.

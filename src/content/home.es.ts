@@ -151,7 +151,7 @@ export const homeContent = {
         output: "Mapa de proceso, cuantificación de baseline y arquitectura preliminar."
       },
       {
-        name: "Piloto controlled",
+        name: "Piloto controlado",
         nameFull: "Piloto controlado",
         description: "Probamos con volumen real y revisión humana. Medimos precisión, tiempo y excepciones.",
         output: "Prototipo funcional operado con supervisión activa."
